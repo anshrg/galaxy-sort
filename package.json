@@ -1,0 +1,11 @@
+{
+  "name": "galaxy-sort",
+  "private": true,
+  "version": "0.3.0",
+  "description": "Galaxy classification classroom activity (free sort, guided sort, feedback)",
+  "type": "module",
+  "scripts": {
+    "test": "node js/logic.test.js",
+    "serve": "python3 -m http.server 8000"
+  }
+}

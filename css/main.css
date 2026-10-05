@@ -1,0 +1,1002 @@
+/* Night Observatory theme (shared with the telescope site) — see DESIGN.md. */
+
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url('../fonts/inter-latin.woff2') format('woff2');
+}
+
+:root {
+  --sky-top: #0b1026;
+  --sky-bottom: #1c2450;
+  --surface: rgba(20, 27, 56, 0.88);
+  --surface-2: rgba(36, 46, 92, 0.7);
+  --line: rgba(168, 179, 217, 0.28);
+  --text: #f2f5ff;
+  --text-dim: #b4bee2;
+  --amber: #f2b04a;
+  --amber-bright: #ffc76b;
+  --ok: #53e08c;
+  /* galaxy-type accents — echo the real colors: old yellow stars, blue arms, pink star birth */
+  --ell: #f2b04a;
+  --spi: #61a8ff;
+  --irr: #ff7eb6;
+  --tile: 108px;
+  --radius: 10px;
+  --font-display: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-body: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  min-height: 100%;
+}
+
+body,
+.app {
+  font-family: var(--font-body);
+  font-size: 18px;
+  color: var(--text);
+  background-color: var(--sky-top);
+  background-image:
+    radial-gradient(1px 1px at 12% 18%, rgba(255, 255, 255, 0.7) 50%, transparent 51%),
+    radial-gradient(1px 1px at 72% 9%, rgba(255, 255, 255, 0.55) 50%, transparent 51%),
+    radial-gradient(1.5px 1.5px at 38% 62%, rgba(255, 255, 255, 0.5) 50%, transparent 51%),
+    radial-gradient(1px 1px at 88% 74%, rgba(255, 255, 255, 0.6) 50%, transparent 51%),
+    radial-gradient(1px 1px at 22% 88%, rgba(255, 255, 255, 0.45) 50%, transparent 51%),
+    radial-gradient(60% 50% at 80% 10%, rgba(120, 90, 200, 0.12), transparent),
+    linear-gradient(180deg, var(--sky-top), var(--sky-bottom));
+  background-attachment: fixed;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3,
+.btn {
+  font-family: var(--font-display);
+  letter-spacing: -0.01em;
+}
+
+.hidden,
+[hidden] {
+  display: none !important;
+}
+
+:focus-visible {
+  outline: 3px solid var(--amber);
+  outline-offset: 2px;
+}
+
+button.link {
+  background: none;
+  border: 0;
+  padding: 0;
+  font: inherit;
+  color: inherit;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+/* ---- buttons ---- */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 48px;
+  padding: 8px 22px;
+  border-radius: 8px;
+  border: 1px solid var(--line);
+  background: var(--surface-2);
+  color: var(--text);
+  font-size: 1.05rem;
+  font-weight: 600;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+.btn.primary {
+  background: var(--amber);
+  border-color: var(--amber);
+  color: #1a1330;
+}
+
+.btn.primary:hover:not(:disabled) {
+  background: var(--amber-bright);
+}
+
+.btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.btn.ghost {
+  background: transparent;
+}
+
+.btn.small {
+  min-height: 36px;
+  padding: 4px 14px;
+  font-size: 0.95rem;
+}
+
+/* ---- screen shell ---- */
+
+.screen {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  padding: 16px 20px 20px;
+  gap: 14px;
+}
+
+.screen > * {
+  flex-shrink: 0;
+}
+
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.steps {
+  display: flex;
+  gap: 6px;
+  list-style: none;
+  font-size: 0.8rem;
+  color: var(--text-dim);
+}
+
+.steps li {
+  padding: 2px 10px;
+  border-radius: 6px;
+  border: 1px solid var(--line);
+}
+
+.steps li.on {
+  background: var(--amber);
+  border-color: var(--amber);
+  color: #1a1330;
+  font-weight: 700;
+}
+
+.steps li.done {
+  color: var(--ok);
+  border-color: rgba(83, 224, 140, 0.4);
+}
+
+.instr {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+}
+
+.instr small {
+  display: block;
+  font-family: var(--font-body);
+  font-size: 1rem;
+  font-weight: 400;
+  color: var(--text-dim);
+  margin-top: 2px;
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 14px;
+  margin-top: auto;
+}
+
+.actions .note {
+  color: var(--text-dim);
+  font-size: 0.95rem;
+  margin-right: auto;
+}
+
+/* ---- galaxy tiles ---- */
+
+.tile {
+  position: relative;
+  width: var(--tile);
+  height: var(--tile);
+  border-radius: 12px;
+  overflow: hidden;
+  border: 2px solid rgba(255, 255, 255, 0.12);
+  background: #000;
+  cursor: grab;
+  touch-action: none; /* we handle pointer drags ourselves */
+  user-select: none;
+  -webkit-user-select: none;
+  flex: none;
+}
+
+.tile img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  pointer-events: none;
+}
+
+.tile.selected {
+  border-color: var(--amber);
+  box-shadow: 0 0 0 3px rgba(242, 176, 74, 0.45), 0 0 18px rgba(242, 176, 74, 0.5);
+}
+
+.tile.dragging {
+  opacity: 0.35;
+}
+
+.tile .zoom {
+  position: absolute;
+  right: 4px;
+  bottom: 4px;
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  border: 0;
+  background: rgba(11, 16, 38, 0.75);
+  color: var(--text);
+  display: grid;
+  place-items: center;
+}
+
+.tile .zoom svg {
+  width: 16px;
+  height: 16px;
+}
+
+.pool {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 12px;
+  min-height: calc(var(--tile) + 28px);
+  border-radius: var(--radius);
+  background: rgba(8, 12, 30, 0.55);
+  border: 2px dashed var(--line);
+  align-content: flex-start;
+}
+
+.pool-label {
+  font-size: 0.9rem;
+  color: var(--text-dim);
+}
+
+/* ---- free-sort groups ---- */
+
+.groups {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 14px;
+  align-items: start;
+}
+
+.group {
+  border-radius: var(--radius);
+  background: var(--surface);
+  border: 2px solid var(--line);
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-height: calc(var(--tile) + 80px);
+}
+
+.group.over,
+.bin.over {
+  border-color: var(--amber);
+  box-shadow: 0 0 0 3px rgba(242, 176, 74, 0.35);
+}
+
+.group-head {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.group-name {
+  flex: 1;
+  min-width: 0;
+  font: 600 1.15rem var(--font-display);
+  color: var(--text);
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 4px 10px;
+}
+
+.group-name::placeholder {
+  color: var(--text-dim);
+  font-weight: 400;
+}
+
+.icon-btn {
+  width: 40px;
+  height: 40px;
+  flex: none;
+  border-radius: 50%;
+  border: 1px solid var(--line);
+  background: transparent;
+  color: var(--text-dim);
+  font-size: 1.1rem;
+  cursor: pointer;
+}
+
+.group-body,
+.bin-body {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  flex: 1;
+  align-content: flex-start;
+  min-height: var(--tile);
+}
+
+.group-body:empty::before,
+.bin-body:empty::before {
+  content: 'Drop galaxies here';
+  color: var(--text-dim);
+  font-size: 0.95rem;
+  margin: auto;
+}
+
+.add-group {
+  border: 2px dashed var(--line);
+  border-radius: var(--radius);
+  background: transparent;
+  color: var(--text-dim);
+  font: 600 1.15rem var(--font-display);
+  min-height: calc(var(--tile) + 80px);
+  cursor: pointer;
+}
+
+/* ---- name & explain / share ---- */
+
+.why {
+  width: 100%;
+  font: 1rem var(--font-body);
+  color: var(--text);
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 8px 10px;
+  resize: none;
+}
+
+.why.missing {
+  border-color: var(--amber);
+}
+
+.share {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 16px;
+}
+
+.share-card {
+  border-radius: var(--radius);
+  background: var(--surface);
+  border: 2px solid var(--line);
+  padding: 14px 16px;
+}
+
+.share-card h2 {
+  font-size: 2.5rem;
+  line-height: 1.1;
+  color: var(--amber-bright);
+}
+
+.share-card .because {
+  font-size: 1.5rem;
+  line-height: 1.25;
+  margin: 4px 0 10px;
+}
+
+.share-card .because::before {
+  content: 'because… ';
+  color: var(--text-dim);
+}
+
+.share-card .thumbs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.share-card .thumbs img {
+  width: 92px;
+  height: 92px;
+  border-radius: 8px;
+}
+
+/* ---- eyes up ---- */
+
+.eyes {
+  position: relative;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background: #05081a;
+}
+
+.eyes .back {
+  position: absolute;
+  top: 16px;
+  left: 20px;
+}
+
+.eyes h1 {
+  font-size: clamp(2.4rem, 7vw, 4.4rem);
+  line-height: 1.05;
+}
+
+.eyes p {
+  color: var(--text-dim);
+  font-size: 1.7rem;
+  max-width: 34ch;
+}
+
+.code-box {
+  margin-top: 40px;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  opacity: 0.7;
+}
+
+.code-box input {
+  width: 9ch;
+  font: 600 1.2rem var(--font-display);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-align: center;
+  color: var(--text);
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 6px;
+}
+
+.code-hint {
+  font-size: 0.9rem;
+  color: var(--text-dim);
+  min-height: 1.3em;
+}
+
+/* ---- guided bins ---- */
+
+.bins {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  flex: 1;
+}
+
+.bin {
+  border-radius: var(--radius);
+  background: var(--surface);
+  border: 2px solid var(--line);
+  border-top: 6px solid var(--c);
+  padding: 10px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.bin[data-type='elliptical'] { --c: var(--ell); }
+.bin[data-type='spiral'] { --c: var(--spi); }
+.bin[data-type='irregular'] { --c: var(--irr); }
+
+.bin-head {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.bin-head svg {
+  width: 44px;
+  height: 44px;
+  flex: none;
+  color: var(--c);
+}
+
+.bin-head h2 {
+  font-size: 1.5rem;
+  line-height: 1;
+  color: var(--c);
+}
+
+.bin-head p {
+  font-size: 0.95rem;
+  color: var(--text-dim);
+}
+
+/* ---- results ---- */
+
+.score {
+  text-align: center;
+  padding: 10px 0 4px;
+}
+
+.score h1 {
+  font-size: clamp(2rem, 5vw, 3rem);
+  line-height: 1.1;
+}
+
+.score p {
+  color: var(--text-dim);
+  font-size: 1.15rem;
+}
+
+.section-title {
+  font: 600 1.3rem var(--font-display);
+  margin-top: 6px;
+}
+
+.agree-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.agree-row .mini {
+  position: relative;
+}
+
+.agree-row img {
+  width: 64px;
+  height: 64px;
+  border-radius: 8px;
+  display: block;
+}
+
+.agree-row .mini::after {
+  content: '✓';
+  position: absolute;
+  right: -4px;
+  top: -6px;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--ok);
+  color: #0b1026;
+  font-weight: 800;
+  font-size: 14px;
+  text-align: center;
+  line-height: 22px;
+}
+
+.diff-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(420px, 1fr));
+  gap: 12px;
+}
+
+.diff {
+  display: flex;
+  gap: 14px;
+  padding: 12px;
+  border-radius: var(--radius);
+  background: var(--surface);
+  border: 2px solid var(--line);
+  border-left: 6px solid var(--c);
+}
+
+.diff[data-type='elliptical'] { --c: var(--ell); }
+.diff[data-type='spiral'] { --c: var(--spi); }
+.diff[data-type='irregular'] { --c: var(--irr); }
+.diff[data-type='quasar'] { --c: #c9a7ff; }
+
+.diff img {
+  width: 120px;
+  height: 120px;
+  border-radius: 10px;
+  flex: none;
+}
+
+.diff .calls {
+  font-size: 0.95rem;
+  color: var(--text-dim);
+}
+
+.diff .calls b {
+  color: var(--c);
+}
+
+.diff p {
+  margin-top: 4px;
+  line-height: 1.35;
+}
+
+.callback {
+  padding: 12px 16px;
+  border-radius: var(--radius);
+  background: rgba(83, 224, 140, 0.1);
+  border: 2px solid rgba(83, 224, 140, 0.35);
+  font-size: 1.1rem;
+}
+
+.foot {
+  font-size: 0.8rem;
+  color: var(--text-dim);
+}
+
+.foot a {
+  color: var(--text-dim);
+}
+
+/* ---- welcome ---- */
+
+.welcome {
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.welcome h1 {
+  font-size: clamp(2.4rem, 6vw, 4rem);
+  line-height: 1.05;
+}
+
+.welcome .btn {
+  font-size: 1.5rem;
+  min-height: 60px;
+  padding: 10px 36px;
+}
+
+.welcome .tagline {
+  font-size: 1.3rem;
+  color: var(--text-dim);
+  margin: 8px 0 26px;
+}
+
+.welcome .strip {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-bottom: 28px;
+}
+
+.welcome .strip img {
+  width: 84px;
+  height: 84px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.15);
+}
+
+/* ---- phones ---- */
+
+@media (max-width: 640px) {
+  :root {
+    --tile: 76px;
+  }
+
+  body,
+  .app {
+    font-size: 16px;
+  }
+
+  .screen {
+    padding: 10px 12px 14px;
+  }
+
+  .instr {
+    font-size: 1.3rem;
+  }
+
+  .steps {
+    display: none;
+  }
+
+  .actions {
+    flex-wrap: wrap;
+  }
+
+  .actions .note {
+    width: 100%;
+  }
+
+  .share-card h2 {
+    font-size: 1.8rem;
+  }
+
+  .share-card .because {
+    font-size: 1.2rem;
+  }
+
+  .bins {
+    grid-template-columns: 1fr;
+  }
+
+  .diff-list {
+    grid-template-columns: 1fr;
+  }
+
+  .diff img {
+    width: 84px;
+    height: 84px;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .tile {
+    transition: box-shadow 0.15s, border-color 0.15s;
+  }
+}
+
+/* ---- teacher / projector view ---- */
+
+.teach {
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 24px;
+}
+
+.t-title {
+  font-size: clamp(2rem, 4.2vw, 3.2rem);
+  line-height: 1.1;
+}
+
+.t-cols {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px;
+  width: min(1200px, 100%);
+}
+
+.t-col {
+  padding: 18px;
+  border-radius: 18px;
+  background: var(--surface);
+  border-top: 8px solid var(--c);
+  color: var(--text);
+}
+
+.t-col h2 {
+  font-size: 2.4rem;
+  color: var(--c);
+  line-height: 1.1;
+}
+
+.t-icon svg {
+  width: 64px;
+  height: 64px;
+  color: var(--c);
+}
+
+.t-imgs {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin: 10px 0;
+}
+
+.t-imgs img {
+  width: 150px;
+  height: 150px;
+  border-radius: 12px;
+}
+
+.t-col p {
+  font-size: 1.5rem;
+  line-height: 1.25;
+}
+
+.t-code {
+  font: 600 1.6rem var(--font-display);
+  color: var(--text-dim);
+}
+
+.t-code b {
+  color: var(--amber-bright);
+  letter-spacing: 0.15em;
+  font-size: 2.2rem;
+}
+
+/* ---- interaction states ---- */
+
+.tile .zoom {
+  cursor: zoom-in;
+  touch-action: manipulation;
+}
+
+.tile.ghost {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 1000;
+  pointer-events: none;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.6), 0 0 0 3px var(--amber);
+  opacity: 0.95;
+}
+
+/* a galaxy is picked up by tap: every place it can go gets a hint */
+.has-selection [data-zone] {
+  border-color: rgba(242, 176, 74, 0.6);
+  cursor: pointer;
+}
+
+.has-selection .add-group {
+  border-color: rgba(242, 176, 74, 0.6);
+  color: var(--amber-bright);
+}
+
+.group-name.missing {
+  border-color: var(--amber);
+}
+
+.why-groups .thumbs img {
+  border-radius: 8px;
+}
+
+.welcome {
+  position: relative;
+}
+
+.welcome-foot {
+  position: absolute;
+  bottom: 14px;
+  left: 0;
+  right: 0;
+}
+
+.discuss {
+  background: rgba(97, 168, 255, 0.08);
+  border-color: rgba(97, 168, 255, 0.3);
+}
+
+/* ---- results details ---- */
+
+.score .hl {
+  color: var(--amber-bright);
+}
+
+.t-elliptical { color: var(--ell); }
+.t-spiral { color: var(--spi); }
+.t-irregular { color: var(--irr); }
+
+.diff .calls b.t-elliptical { color: var(--ell); }
+.diff .calls b.t-spiral { color: var(--spi); }
+.diff .calls b.t-irregular { color: var(--irr); }
+
+.diff .tricky {
+  font-size: 0.95rem;
+  color: var(--amber-bright);
+}
+
+.results #quasar-card .diff {
+  max-width: 900px;
+}
+
+/* ---- dialogs ---- */
+
+dialog {
+  color: var(--text);
+  font-family: var(--font-body);
+}
+
+dialog::backdrop {
+  background: rgba(3, 5, 15, 0.85);
+}
+
+.zoom-dialog {
+  margin: auto;
+  border: 0;
+  padding: 0;
+  background: transparent;
+  text-align: center;
+  cursor: zoom-out;
+}
+
+.zoom-dialog img {
+  width: min(88vw, 78vh, 720px);
+  height: min(88vw, 78vh, 720px);
+  border-radius: 12px;
+  display: block;
+}
+
+.zoom-dialog p {
+  margin-top: 8px;
+  color: var(--text-dim);
+  font-size: 0.9rem;
+}
+
+.credits-dialog {
+  margin: auto;
+  width: min(720px, calc(100vw - 32px));
+  max-height: calc(100vh - 48px);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: #10163a;
+  padding: 20px;
+}
+
+.credits-dialog h2 {
+  font-size: 1.4rem;
+  margin-bottom: 8px;
+}
+
+.credits-dialog ul {
+  list-style: none;
+  margin: 12px 0;
+  display: grid;
+  gap: 8px;
+}
+
+.credits-dialog li {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  font-size: 0.9rem;
+  color: var(--text-dim);
+}
+
+.credits-dialog li img {
+  border-radius: 6px;
+  flex: none;
+}
+
+.credits-dialog a {
+  color: var(--text);
+}
+
+.credits-note {
+  font-size: 0.85rem;
+  color: var(--text-dim);
+  margin-bottom: 10px;
+}
+
+/* The zoom button only exists on a picked-up (or hovered) tile. On touch screens, browsers
+   snap a fingertip to any nearby button, so an always-visible one would steal drags. */
+.tile .zoom {
+  display: none;
+}
+
+.tile.selected .zoom {
+  display: grid;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .tile:hover .zoom {
+    display: grid;
+  }
+}
+
+.tile.ghost .zoom {
+  display: none;
+}
+
+/* once everything is sorted, the pool shrinks to a slim drop-back strip */
+.pool:empty {
+  min-height: 52px;
+  display: grid;
+  place-items: center;
+}
+
+.pool:empty::before {
+  content: 'Drop a galaxy here to take it back out.';
+  color: var(--text-dim);
+  font-size: 0.9rem;
+}
+
+@media (max-width: 640px) {
+  .add-group {
+    min-height: 56px;
+  }
+}

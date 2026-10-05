@@ -1,0 +1,348 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Galaxy Sort Storyboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/main.css?v=2" />
+  <link rel="stylesheet" href="css/storyboard.css?v=2" />
+</head>
+<body class="sb">
+<main class="sb-wrap">
+
+<header class="sb-head">
+  <p class="sb-kicker">Storyboard · v0.2 · for feedback before the full build</p>
+  <h1>Galaxy Sort</h1>
+  <p class="sb-lede">
+    A 4-phase classroom activity. Students sort galaxies their own way, share with their table,
+    learn the three types from you, then sort again and see how <b>Mr. Gupta</b> sorted them, and why.
+    Every screen below uses the real styles, images and wording.
+  </p>
+</header>
+
+<section class="sb-block changes">
+  <h2>Changes since v0.1</h2>
+  <ul class="sb-list">
+    <li><b>Plainer tone.</b> Emoji and party language are gone. Encouragement stays, but it's matter-of-fact ("Solid work", not "You think like an astronomer!").</li>
+    <li><b>New font: Inter</b> (it was Baloo 2/Nunito). Corners are squarer, buttons are rectangles instead of pills, and the magnifying-glass emoji is now a plain expand icon.</li>
+    <li><b>Back button on "Eyes up front"</b>, so students who skip ahead can return to their groups.</li>
+    <li><b>Passcode is <code>BUBBLE</code></b> (case doesn't matter).</li>
+    <li><b>Word filter</b> on group names and "why" text.</li>
+    <li><b>No teacher/projector view.</b> You'll use your own slides.</li>
+    <li>Clue text is less exclamatory. Your M74 wording ("See the arms winding out…") is kept.</li>
+  </ul>
+</section>
+
+<section class="sb-block">
+  <h2>Time budget (about 19 min)</h2>
+  <div class="timeline">
+    <div style="--m:5;--c:#f2b04a"><b>Free sort</b><span>5 min · 12 galaxies</span></div>
+    <div style="--m:1.5;--c:#f2b04a"><b>Name + why</b><span>1.5</span></div>
+    <div style="--m:3;--c:#53e08c"><b>Share at table</b><span>3 min</span></div>
+    <div style="--m:4;--c:#a8b3d9"><b>Eyes up · you explain</b><span>4 min</span></div>
+    <div style="--m:3;--c:#61a8ff"><b>Guided sort</b><span>3 min · 11</span></div>
+    <div style="--m:2;--c:#ff7eb6"><b>Results</b><span>2 min</span></div>
+  </div>
+</section>
+
+<!-- ================================================================ -->
+<section class="scene">
+  <div class="scene-n">0</div>
+  <div class="frames">
+    <div class="frame laptop"><div class="vp">
+      <div class="app screen welcome">
+        <div class="strip" data-strip="m74,ic2006,ngc4449,ugc10043,antennae"></div>
+        <h1>Galaxy Sort</h1>
+        <p class="tagline">Sort real Hubble Space Telescope images, the way astronomers first did.</p>
+        <button class="btn primary">Start</button>
+        <p class="foot" style="position:absolute;bottom:14px">Images: ESA/Hubble &amp; NASA · <a href="#">Credits</a> · v0.2</p>
+      </div>
+    </div></div>
+  </div>
+  <div class="notes">
+    <h3>Welcome</h3>
+    <ul>
+      <li>One tap to start. No sign-in and no names.</li>
+      <li>Progress <b>saves on the device</b>. If a student refreshes or closes the tab, they come back where they were.</li>
+      <li>"Credits" opens the full list of image credits.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ================================================================ -->
+<section class="scene">
+  <div class="scene-n">1</div>
+  <div class="frames">
+    <div class="frame laptop"><div class="vp">
+      <div class="app screen">
+        <div class="topbar">
+          <div class="instr">Sort these galaxies into groups. You decide what the groups are.
+            <small>There are no right answers here. Drag a galaxy into a group, or tap it and then tap a group.</small></div>
+          <ol class="steps"><li class="on">Sort</li><li>Share</li><li>Learn</li><li>Sort again</li><li>Results</li></ol>
+        </div>
+        <div>
+          <p class="pool-label">Galaxies to sort (7 left)</p>
+          <div class="pool" data-tiles="ic2006,ngc1300,ugc10043,ngc7292,antennae,ngc1132,3c273" data-sel="ugc10043"></div>
+        </div>
+        <div class="groups">
+          <div class="group over">
+            <div class="group-head"><input class="group-name" value="Swirly ones" /><button class="icon-btn">✕</button></div>
+            <div class="group-body" data-tiles="m74,ugc11537"></div>
+          </div>
+          <div class="group">
+            <div class="group-head"><input class="group-name" value="Blobs" /><button class="icon-btn">✕</button></div>
+            <div class="group-body" data-tiles="m59"></div>
+          </div>
+          <div class="group">
+            <div class="group-head"><input class="group-name" value="" placeholder="Name this group" /><button class="icon-btn">✕</button></div>
+            <div class="group-body" data-tiles="ngc1427a,ngc4449"></div>
+          </div>
+          <button class="add-group">+ New group</button>
+        </div>
+        <div class="actions">
+          <span class="note">Sort every galaxy to continue.</span>
+          <button class="btn primary" disabled>Done sorting</button>
+        </div>
+      </div>
+    </div></div>
+    <div class="frame phone"><div class="vp">
+      <div class="app screen">
+        <div class="instr">Sort these galaxies into groups.
+          <small>Tap a galaxy, then tap a group.</small></div>
+        <div class="pool" data-tiles="ic2006,ngc1300,ugc10043,ngc7292,antennae,ngc1132,3c273" data-sel="ugc10043"></div>
+        <div class="groups">
+          <div class="group over">
+            <div class="group-head"><input class="group-name" value="Swirly ones" /><button class="icon-btn">✕</button></div>
+            <div class="group-body" data-tiles="m74,ugc11537"></div>
+          </div>
+          <div class="group">
+            <div class="group-head"><input class="group-name" value="Blobs" /><button class="icon-btn">✕</button></div>
+            <div class="group-body" data-tiles="m59"></div>
+          </div>
+          <button class="add-group" style="min-height:56px">+ New group</button>
+        </div>
+      </div>
+    </div></div>
+  </div>
+  <div class="notes">
+    <h3>Phase 1 · Free sort</h3>
+    <ul>
+      <li><b>Two ways to move a galaxy:</b> drag it (mouse or finger), <i>or</i> tap it (gold outline) and then tap a group. Tapping is the reliable option on phones.</li>
+      <li>Starts with 2 empty groups plus "+ New group". ✕ deletes a group and sends its galaxies back to the top.</li>
+      <li>The corner icon on a tile opens a large view of the image.</li>
+      <li>Galaxy names are hidden until the results screen.</li>
+      <li>Gate: every galaxy placed, at least 2 groups.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ================================================================ -->
+<section class="scene">
+  <div class="scene-n">1b</div>
+  <div class="frames">
+    <div class="frame laptop"><div class="vp">
+      <div class="app screen">
+        <div class="topbar">
+          <div class="instr">Why do these belong together?
+            <small>Write a short reason for each group. You'll explain it to your table.</small></div>
+          <ol class="steps"><li class="on">Sort</li><li>Share</li><li>Learn</li><li>Sort again</li><li>Results</li></ol>
+        </div>
+        <div class="groups" style="grid-template-columns:repeat(3,1fr)">
+          <div class="group">
+            <div class="group-head"><input class="group-name" value="Swirly ones" /></div>
+            <div class="group-body" data-tiles="m74,ugc11537,ngc1300,ugc10043" data-size="84"></div>
+            <textarea class="why" rows="2">they have arms that spin around</textarea>
+          </div>
+          <div class="group">
+            <div class="group-head"><input class="group-name" value="Blobs" /></div>
+            <div class="group-body" data-tiles="m59,ic2006,ngc1132,3c273" data-size="84"></div>
+            <textarea class="why" rows="2">smooth and glowy, no shape</textarea>
+          </div>
+          <div class="group">
+            <div class="group-head"><input class="group-name" value="Messy" /></div>
+            <div class="group-body" data-tiles="ngc1427a,ngc4449,ngc7292,antennae" data-size="84"></div>
+            <textarea class="why missing" rows="2" placeholder="These belong together because…"></textarea>
+          </div>
+        </div>
+        <div class="actions">
+          <button class="btn ghost">Back to sorting</button>
+          <button class="btn primary" disabled>Show my groups</button>
+        </div>
+      </div>
+    </div></div>
+  </div>
+  <div class="notes">
+    <h3>Phase 1b · Name + why (required)</h3>
+    <ul>
+      <li>Every group needs a name and a reason of at least 3 characters. Any empty field is outlined in gold.</li>
+      <li><b>Word filter:</b> names and reasons are checked against a short list of profanity and slurs. A match is replaced with <code>***</code> as the student types, before it can reach the share screen. Students can get around it with creative spelling, but casual cases are caught.</li>
+      <li>"Back to sorting" keeps everything.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ================================================================ -->
+<section class="scene">
+  <div class="scene-n">1c</div>
+  <div class="frames">
+    <div class="frame laptop"><div class="vp">
+      <div class="app screen">
+        <div class="topbar">
+          <div class="instr">My galaxy groups
+            <small>Turn your screen to your table and explain your groups. Then listen to theirs.</small></div>
+          <ol class="steps"><li class="done">Sort</li><li class="on">Share</li><li>Learn</li><li>Sort again</li><li>Results</li></ol>
+        </div>
+        <div class="share">
+          <div class="share-card"><h2>Swirly ones</h2><p class="because">they have arms that spin around</p><div class="thumbs" data-thumbs="m74,ugc11537,ngc1300,ugc10043"></div></div>
+          <div class="share-card"><h2>Blobs</h2><p class="because">smooth and glowy, no shape</p><div class="thumbs" data-thumbs="m59,ic2006,ngc1132,3c273"></div></div>
+          <div class="share-card"><h2>Messy</h2><p class="because">they look like clouds that got smushed</p><div class="thumbs" data-thumbs="ngc1427a,ngc4449,ngc7292,antennae"></div></div>
+        </div>
+        <div class="callback" style="background:rgba(97,168,255,.08);border-color:rgba(97,168,255,.3)">
+          <b>Discuss:</b> Did anyone make the same groups as you? Which galaxy did your table sort the most differently?
+        </div>
+        <div class="actions">
+          <button class="btn ghost small">Edit</button>
+          <button class="btn primary">Done sharing</button>
+        </div>
+      </div>
+    </div></div>
+  </div>
+  <div class="notes">
+    <h3>Phase 1c · Share view (think-pair-share)</h3>
+    <ul>
+      <li>Large group names, reasons and thumbnails, readable from across a table. Nothing on it can be accidentally changed.</li>
+      <li>Two discussion prompts for tables that stall.</li>
+      <li>This summary comes back on the results screen.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ================================================================ -->
+<section class="scene">
+  <div class="scene-n">2</div>
+  <div class="frames">
+    <div class="frame laptop"><div class="vp">
+      <div class="app screen eyes">
+        <button class="btn ghost small back">← Back to my groups</button>
+        <h1>Eyes up front.</h1>
+        <p>Mr. Gupta is going to explain how astronomers sort galaxies.</p>
+        <div class="code-box"><input value="" placeholder="CODE" /><button class="btn small">Unlock</button></div>
+        <p class="code-hint">Not yet. You'll get the code after the explanation.</p>
+      </div>
+    </div></div>
+  </div>
+  <div class="notes">
+    <h3>Phase 2 · Eyes up front</h3>
+    <ul>
+      <li>An almost black screen with nothing to play with. The code box is small and dim.</li>
+      <li><b>New: "← Back to my groups"</b> returns to the share screen (and from there to editing), so a student who clicked through early isn't stuck.</li>
+      <li>A wrong code shows the line underneath. Nothing flashes red or buzzes.</li>
+      <li>The code is <code>BUBBLE</code>, case-insensitive, set in <code>js/config.js</code>. Announce it or put it on your last slide.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ================================================================ -->
+<section class="scene">
+  <div class="scene-n">3</div>
+  <div class="frames">
+    <div class="frame laptop"><div class="vp">
+      <div class="app screen">
+        <div class="topbar">
+          <div class="instr">Now sort them into the three types astronomers use.
+            <small>Use the description under each type. Drag a galaxy, or tap it and then tap a type.</small></div>
+          <ol class="steps"><li class="done">Sort</li><li class="done">Share</li><li class="done">Learn</li><li class="on">Sort again</li><li>Results</li></ol>
+        </div>
+        <div class="pool" data-tiles="ngc7292,ugc10043,antennae,ngc1132" data-sel="antennae"></div>
+        <div class="bins">
+          <div class="bin" data-type="elliptical"><div class="bin-head"><span data-icon="elliptical"></span><div><h2>Elliptical</h2><p>Smooth oval or ball. No arms.</p></div></div><div class="bin-body" data-tiles="ic2006,m59"></div></div>
+          <div class="bin over" data-type="spiral"><div class="bin-head"><span data-icon="spiral"></span><div><h2>Spiral</h2><p>Flat disk with arms that swirl out.</p></div></div><div class="bin-body" data-tiles="m74,ngc1300,ugc11537"></div></div>
+          <div class="bin" data-type="irregular"><div class="bin-head"><span data-icon="irregular"></span><div><h2>Irregular</h2><p>Messy and lumpy. No clear shape.</p></div></div><div class="bin-body" data-tiles="ngc1427a,ngc4449"></div></div>
+        </div>
+        <div class="actions">
+          <span class="note">4 left to sort</span>
+          <button class="btn primary" disabled>See how Mr. Gupta sorted them</button>
+        </div>
+      </div>
+    </div></div>
+  </div>
+  <div class="notes">
+    <h3>Phase 3 · Guided sort (11 galaxies)</h3>
+    <ul>
+      <li>The same images minus the quasar, in a new random order. Moving galaxies works exactly as in the free sort.</li>
+      <li>Each type has a shape icon, a color and a one-line description, so color is never the only cue.</li>
+      <li>Galaxies can be moved freely until the student continues. The button unlocks once all 11 are placed.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ================================================================ -->
+<section class="scene">
+  <div class="scene-n">4</div>
+  <div class="frames">
+    <div class="frame laptop tall"><div class="vp">
+      <div class="app screen">
+        <div class="score">
+          <h1>You and Mr. Gupta agreed on <span style="color:var(--amber-bright)">9 of 11</span>.</h1>
+          <p>Solid work. Here's where you sorted differently, and what to look for.</p>
+        </div>
+        <div class="diff-list">
+          <div class="diff" data-type="spiral"><img data-img="ugc10043" alt="" /><div>
+            <div class="calls">You said <b style="color:var(--ell)">Elliptical</b> · Mr. Gupta said <b>Spiral</b></div>
+            <p><b>UGC 10043.</b> <span data-clue="ugc10043"></span></p></div></div>
+          <div class="diff" data-type="irregular"><img data-img="antennae" alt="" /><div>
+            <div class="calls">You said <b style="color:var(--spi)">Spiral</b> · Mr. Gupta said <b>Irregular</b></div>
+            <p><b>The Antennae.</b> <span data-clue="antennae"></span></p>
+            <p class="sb-tag">Astronomers debate this one too. Seeing spirals in it is reasonable.</p></div></div>
+        </div>
+        <p class="section-title">You both agreed on these</p>
+        <div class="agree-row" data-mini="ic2006,m59,ngc1132,m74,ngc1300,ugc11537,ngc1427a,ngc7292,ngc4449"></div>
+        <div class="callback"><b>Your groups vs. astronomers' types.</b> Your "Swirly ones" group matches what astronomers call <b style="color:var(--spi)">Spiral</b>, and "Blobs" matches <b style="color:var(--ell)">Elliptical</b>. Astronomers came up with these types about 100 years ago the same way you did: by sorting pictures.</div>
+        <div class="diff" data-type="quasar"><img data-img="3c273" alt="" /><div>
+          <div class="calls"><b>The bright dot from the first sort</b></div>
+          <p><span data-clue="3c273"></span></p></div></div>
+        <div class="actions"><span class="note foot">Images: ESA/Hubble &amp; NASA · Credits</span><button class="btn ghost small">Start over</button></div>
+      </div>
+    </div></div>
+  </div>
+  <div class="notes">
+    <h3>Phase 4 · Results</h3>
+    <ul>
+      <li>The headline is "You and Mr. Gupta agreed on N of 11." One line of feedback underneath, depending on N:
+        <ul>
+          <li>11: "You matched every one."</li>
+          <li>8–10: "Solid work. Here's where you sorted differently, and what to look for."</li>
+          <li>5–7: "Good start. The ones below are where the clues are easy to miss."</li>
+          <li>0–4: "These are tricky. Here's what to look for in each one."</li>
+        </ul></li>
+      <li>Disagreements come first, each with the image, both choices and the clue. Matches are a compact row with check marks.</li>
+      <li>The two tricky galaxies get an extra line saying astronomers debate them too.</li>
+      <li><b>Link back to the first sort:</b> any of the student's groups that is mostly one type gets matched to that type by name.</li>
+      <li>"Start over" asks for confirmation before erasing. You can also open <code>…/?reset</code> on any device.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ================================================================ -->
+<section class="sb-block">
+  <h2>The galaxy set (11 guided + 1 free-sort only)</h2>
+  <p class="sb-small">The clue text is exactly what students see when their choice differs from yours.</p>
+  <table class="gtable" id="gtable"><thead><tr><th></th><th>Galaxy</th><th>Your call</th><th>Clue shown to students</th><th>Credit</th></tr></thead><tbody></tbody></table>
+</section>
+
+<section class="sb-block">
+  <h2>Still open</h2>
+  <ul class="sb-list">
+    <li>Is Inter the right feel? Two other options would be IBM Plex Sans (slightly more technical) or Source Sans 3 (slightly softer).</li>
+    <li>Science wording: you'll check it later. Clues live in <code>js/data/galaxies.js</code>.</li>
+  </ul>
+</section>
+
+<footer class="sb-foot">Images: ESA/Hubble &amp; NASA (CC BY 4.0) and NASA/STScI Hubble Heritage (public domain); full credits in the table above.</footer>
+</main>
+<script type="module" src="js/storyboard.js?v=2"></script>
+</body>
+</html>

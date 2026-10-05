@@ -1,0 +1,267 @@
+/* Storyboard-only layout: annotated, scaled-down mock frames. Not used by the app. */
+
+body.sb {
+  background-attachment: fixed;
+}
+
+.sb-wrap {
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 32px 20px 60px;
+}
+
+.sb-head h1 {
+  font-size: 3rem;
+  line-height: 1;
+}
+
+.sb-kicker {
+  color: var(--amber);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+}
+
+.sb-lede {
+  max-width: 75ch;
+  color: var(--text-dim);
+  margin-top: 8px;
+}
+
+.sb-block {
+  margin-top: 40px;
+}
+
+.sb-block h2 {
+  font-size: 1.6rem;
+  margin-bottom: 10px;
+}
+
+.sb-small {
+  color: var(--text-dim);
+  font-size: 0.95rem;
+  margin-top: 8px;
+  max-width: 90ch;
+}
+
+.timeline {
+  display: flex;
+  gap: 4px;
+}
+
+.timeline div {
+  flex: var(--m);
+  border-top: 6px solid var(--c);
+  background: var(--surface);
+  border-radius: 6px;
+  padding: 6px 8px;
+  font-size: 0.85rem;
+  min-width: 0;
+}
+
+.timeline b {
+  display: block;
+  font-size: 0.9rem;
+}
+
+.timeline span {
+  color: var(--text-dim);
+}
+
+.scene {
+  display: grid;
+  grid-template-columns: 40px minmax(0, 1fr) 340px;
+  gap: 20px;
+  margin-top: 48px;
+  padding-top: 28px;
+  border-top: 1px solid var(--line);
+}
+
+.scene-n {
+  font: 700 2rem var(--font-display);
+  color: var(--amber);
+}
+
+.frames {
+  display: flex;
+  gap: 18px;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+
+.frame {
+  --w: 1366;
+  --h: 768;
+  flex: 1 1 520px;
+  border-radius: 12px;
+  border: 6px solid #2a3155;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+  overflow: hidden;
+  position: relative;
+}
+
+.frame.tall {
+  --h: 1020;
+}
+
+.frame.proj {
+  --w: 1280;
+  --h: 720;
+  border-color: #3b3b3b;
+}
+
+.frame.phone {
+  --w: 390;
+  --h: 760;
+  flex: 0 0 200px;
+  border-radius: 26px;
+  border-width: 8px;
+}
+
+.frame::before {
+  content: '';
+  display: block;
+  padding-top: calc(var(--h) / var(--w) * 100%);
+}
+
+.vp {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: calc(var(--w) * 1px);
+  height: calc(var(--h) * 1px);
+  transform-origin: 0 0;
+  transform: scale(var(--s, 0.5));
+}
+
+.vp > .screen {
+  min-height: 100%;
+  height: 100%;
+  overflow: hidden;
+  background-attachment: scroll;
+  position: relative;
+}
+
+.vp input,
+.vp textarea,
+.vp button {
+  pointer-events: none;
+}
+
+.notes {
+  font-size: 0.95rem;
+  line-height: 1.45;
+}
+
+.notes h3 {
+  font-size: 1.25rem;
+  margin-bottom: 6px;
+  color: var(--amber-bright);
+}
+
+.notes ul {
+  padding-left: 18px;
+}
+
+.notes li {
+  margin-bottom: 6px;
+}
+
+.notes code,
+.sb-list code {
+  background: rgba(255, 255, 255, 0.08);
+  padding: 0 4px;
+  border-radius: 4px;
+}
+
+.sb-tag {
+  font-size: 0.9rem;
+  color: var(--amber-bright);
+}
+
+.sb-list {
+  padding-left: 22px;
+  max-width: 100ch;
+}
+
+.sb-list li {
+  margin-bottom: 6px;
+}
+
+.gtable {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.92rem;
+  margin-top: 10px;
+}
+
+.gtable th {
+  text-align: left;
+  color: var(--text-dim);
+  font-weight: 600;
+  padding: 6px 8px;
+  border-bottom: 1px solid var(--line);
+}
+
+.gtable td {
+  padding: 8px;
+  border-bottom: 1px solid var(--line);
+  vertical-align: top;
+}
+
+.gtable img {
+  width: 88px;
+  height: 88px;
+  border-radius: 8px;
+  display: block;
+}
+
+.gtable .type {
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.gtable .credit {
+  color: var(--text-dim);
+  font-size: 0.82rem;
+  max-width: 260px;
+}
+
+.gtable a {
+  color: var(--text-dim);
+}
+
+.sb-foot {
+  margin-top: 40px;
+  color: var(--text-dim);
+  font-size: 0.85rem;
+}
+
+@media (max-width: 1000px) {
+  .scene {
+    grid-template-columns: 1fr;
+  }
+  .scene-n {
+    display: none;
+  }
+  .gtable .credit {
+    display: none;
+  }
+}
+
+/* media queries can't see the mock's size, so mirror the phone rules here */
+.frame.phone .app {
+  --tile: 76px;
+  font-size: 16px;
+}
+.frame.phone .screen {
+  padding: 10px 12px 14px;
+}
+.frame.phone .instr {
+  font-size: 1.3rem;
+}
+.frame.phone .pool {
+  flex-wrap: nowrap;
+  overflow: hidden;
+}

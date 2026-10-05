@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Galaxy Sort</title>
+  <meta name="description" content="Sort real Hubble Space Telescope galaxy images, the way astronomers first did." />
+  <link rel="preload" href="fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="stylesheet" href="css/main.css?v=3" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Ccircle cx='24' cy='24' r='22' fill='%230b1026'/%3E%3Cg fill='none' stroke='%2361a8ff' stroke-width='3.4' stroke-linecap='round'%3E%3Cpath d='M24 24c1-6 9-8 12-3s-1 13-10 14-16-6-15-15'/%3E%3Cpath d='M24 24c-1 6-9 8-12 3s1-13 10-14 16 6 15 15'/%3E%3C/g%3E%3C/svg%3E" />
+</head>
+<body>
+  <noscript><p style="padding:20px">This activity needs JavaScript turned on.</p></noscript>
+
+  <!-- 0 · Welcome -->
+  <section class="screen welcome" data-screen="welcome" hidden>
+    <div class="strip" id="welcome-strip"></div>
+    <h1>Galaxy Sort</h1>
+    <p class="tagline">Sort real Hubble Space Telescope images, the way astronomers first did.</p>
+    <button class="btn primary" id="btn-start">Start</button>
+    <p class="foot welcome-foot">Images: ESA/Hubble &amp; NASA · <button class="link" data-credits>Credits</button> · <span data-version></span></p>
+  </section>
+
+  <!-- 1 · Free sort -->
+  <section class="screen board" data-screen="sort" hidden>
+    <div class="topbar">
+      <div class="instr">Sort these galaxies into groups. You decide what the groups are.
+        <small>There are no right answers here. Drag a galaxy into a group, or tap it and then tap a group.</small></div>
+      <ol class="steps"></ol>
+    </div>
+    <div>
+      <p class="pool-label" id="sort-pool-label"></p>
+      <div class="pool" id="sort-pool" data-zone="pool" tabindex="0" aria-label="Galaxies to sort"></div>
+    </div>
+    <div class="groups" id="sort-groups"></div>
+    <div class="actions">
+      <span class="note" id="sort-note"></span>
+      <button class="btn primary" id="btn-sort-done">Done sorting</button>
+    </div>
+  </section>
+
+  <!-- 1b · Name + why -->
+  <section class="screen" data-screen="why" hidden>
+    <div class="topbar">
+      <div class="instr">Why do these belong together?
+        <small>Write a short reason for each group. You'll explain it to your table.</small></div>
+      <ol class="steps"></ol>
+    </div>
+    <div class="groups why-groups" id="why-groups"></div>
+    <div class="actions">
+      <button class="btn ghost" id="btn-why-back">Back to sorting</button>
+      <span class="note" id="why-note"></span>
+      <button class="btn primary" id="btn-why-done">Show my groups</button>
+    </div>
+  </section>
+
+  <!-- 1c · Share -->
+  <section class="screen" data-screen="share" hidden>
+    <div class="topbar">
+      <div class="instr">My galaxy groups
+        <small>Turn your screen to your table and explain your groups. Then listen to theirs.</small></div>
+      <ol class="steps"></ol>
+    </div>
+    <div class="share" id="share-cards"></div>
+    <div class="callback discuss">
+      <b>Discuss:</b> Did anyone make the same groups as you? Which galaxy did your table sort the most differently?
+    </div>
+    <div class="actions">
+      <button class="btn ghost small" id="btn-share-edit">Edit</button>
+      <button class="btn primary" id="btn-share-done">Done sharing</button>
+    </div>
+  </section>
+
+  <!-- 2 · Eyes up front -->
+  <section class="screen eyes" data-screen="eyes" hidden>
+    <button class="btn ghost small back" id="btn-eyes-back">← Back to my groups</button>
+    <h1>Eyes up front.</h1>
+    <p><span data-teacher></span> is going to explain how astronomers sort galaxies.</p>
+    <form class="code-box" id="code-form" autocomplete="off">
+      <input id="code-input" placeholder="CODE" aria-label="Unlock code" maxlength="20" autocapitalize="characters" spellcheck="false" />
+      <button class="btn small" type="submit">Unlock</button>
+    </form>
+    <p class="code-hint" id="code-hint" aria-live="polite"></p>
+  </section>
+
+  <!-- 3 · Guided sort -->
+  <section class="screen board" data-screen="guided" hidden>
+    <div class="topbar">
+      <div class="instr">Now sort them into the three types astronomers use.
+        <small>Use the description under each type. Drag a galaxy, or tap it and then tap a type.</small></div>
+      <ol class="steps"></ol>
+    </div>
+    <div class="pool" id="guided-pool" data-zone="pool" tabindex="0" aria-label="Galaxies to sort"></div>
+    <div class="bins" id="guided-bins"></div>
+    <div class="actions">
+      <span class="note" id="guided-note"></span>
+      <button class="btn primary" id="btn-guided-done"><span>See how <span data-teacher></span> sorted them</span></button>
+    </div>
+  </section>
+
+  <!-- 4 · Results -->
+  <section class="screen results" data-screen="results" hidden>
+    <div class="score">
+      <h1 id="score-head"></h1>
+      <p id="score-sub"></p>
+    </div>
+    <div class="diff-list" id="diff-list"></div>
+    <p class="section-title" id="agree-title">You both agreed on these</p>
+    <div class="agree-row" id="agree-row"></div>
+    <div class="callback" id="callback"></div>
+    <div id="quasar-card"></div>
+    <div class="actions">
+      <span class="note foot">Images: ESA/Hubble &amp; NASA · <button class="link" data-credits>Credits</button> · <span data-version></span></span>
+      <button class="btn ghost small" id="btn-reset">Start over</button>
+    </div>
+  </section>
+
+  <!-- overlays -->
+  <dialog id="zoom" class="zoom-dialog" aria-label="Galaxy close-up">
+    <img id="zoom-img" alt="Galaxy close-up" />
+    <p>Tap anywhere to close</p>
+  </dialog>
+
+  <dialog id="credits" class="credits-dialog" aria-labelledby="credits-title">
+    <h2 id="credits-title">Image credits</h2>
+    <p class="credits-note">All images are from the Hubble Space Telescope via
+      <a href="https://esahubble.org/" target="_blank" rel="noopener">ESA/Hubble</a>, used under
+      <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener">CC BY 4.0</a>
+      (NASA/STScI images are public domain). Images were cropped and resized.</p>
+    <ul id="credits-list"></ul>
+    <p class="credits-note">Font: Inter (SIL Open Font License). <span data-version></span></p>
+    <form method="dialog"><button class="btn small">Close</button></form>
+  </dialog>
+
+  <script type="module" src="js/main.js?v=3"></script>
+</body>
+</html>
