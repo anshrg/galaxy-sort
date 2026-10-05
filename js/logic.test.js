@@ -10,6 +10,7 @@ import {
   dropEmptyGroups,
   sortStatus,
   whyStatus,
+  duplicateNames,
   scoreGuided,
   tierMessage,
   groupMatches,
@@ -100,10 +101,28 @@ test('whyStatus: name ≥1 char and reason ≥3 chars (trimmed)', () => {
     { name: ' ', why: 'abc', items: [] },
     { name: 'X', why: ' ab ', items: [] },
   ];
-  assert.deepEqual(whyStatus(groups), { missing: 2, ok: false });
+  assert.equal(whyStatus(groups).missing, 2);
+  assert.equal(whyStatus(groups).ok, false);
   groups[1].name = 'Y';
   groups[2].why = 'abc';
   assert.equal(whyStatus(groups).ok, true);
+});
+
+test('whyStatus: group names must differ (case/spacing-insensitive)', () => {
+  const groups = [
+    { id: 'g1', name: 'Blobs', why: 'smooth', items: [] },
+    { id: 'g2', name: '  blobs ', why: 'round', items: [] },
+    { id: 'g3', name: 'Swirly  Ones', why: 'arms', items: [] },
+    { id: 'g4', name: 'swirly ones', why: 'arms', items: [] },
+    { id: 'g5', name: 'Messy', why: 'lumpy', items: [] },
+  ];
+  assert.deepEqual([...duplicateNames(groups)].sort(), ['g1', 'g2', 'g3', 'g4']);
+  assert.equal(whyStatus(groups).ok, false);
+  groups[1].name = 'Round blobs';
+  groups[3].name = 'Swirly twos';
+  assert.equal(duplicateNames(groups).size, 0);
+  assert.equal(whyStatus(groups).ok, true);
+  assert.equal(duplicateNames([{ id: 'a', name: '' }, { id: 'b', name: ' ' }]).size, 0, 'blank names are "missing", not duplicates');
 });
 
 test('scoreGuided + tiers', () => {

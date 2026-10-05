@@ -1,10 +1,10 @@
 // App: state (saved per device), screen flow + gates, and rendering.
 // Import specifiers carry ?v= so a bumped main.js also busts stale module caches.
-import { CONFIG } from './config.js?v=3';
-import { GALAXIES, TYPES, imageUrl } from './data/galaxies.js?v=3';
-import { ICONS, ZOOM_ICON } from './ui/icons.js?v=3';
-import { Board } from './ui/board.js?v=3';
-import { cleanText } from './filter.js?v=3';
+import { CONFIG } from './config.js?v=4';
+import { GALAXIES, TYPES, imageUrl } from './data/galaxies.js?v=4';
+import { ICONS, ZOOM_ICON } from './ui/icons.js?v=4';
+import { Board } from './ui/board.js?v=4';
+import { cleanText } from './filter.js?v=4';
 import {
   BIN_TYPES,
   MAX_GROUPS,
@@ -20,7 +20,7 @@ import {
   scoreGuided,
   tierMessage,
   groupMatches,
-} from './logic.js?v=3';
+} from './logic.js?v=4';
 
 const byId = Object.fromEntries(GALAXIES.map((g) => [g.id, g]));
 const ALL_IDS = GALAXIES.map((g) => g.id);
@@ -200,12 +200,14 @@ function refreshGates() {
   } else if (state.screen === 'why') {
     const st = whyStatus(state.free.groups);
     $('#btn-why-done').disabled = !st.ok;
-    $('#why-note').textContent = st.ok
-      ? ''
-      : `${st.missing} group${st.missing === 1 ? ' needs' : 's need'} a name and a reason.`;
+    $('#why-note').textContent = st.missing
+      ? `${st.missing} group${st.missing === 1 ? ' needs' : 's need'} a name and a reason.`
+      : st.dupes.size
+        ? 'Each group needs a different name.'
+        : '';
     for (const card of document.querySelectorAll('#why-groups .group')) {
       const g = state.free.groups.find((x) => x.id === card.dataset.group);
-      card.querySelector('.group-name').classList.toggle('missing', !nameOk(g));
+      card.querySelector('.group-name').classList.toggle('missing', !nameOk(g) || st.dupes.has(g.id));
       card.querySelector('.why').classList.toggle('missing', !whyOk(g));
     }
   } else if (state.screen === 'guided') {
@@ -217,8 +219,15 @@ function refreshGates() {
 
 // ---- 0 · welcome ------------------------------------------------------------------
 
+// Tight crops made for the round frames (images/welcome/), not the sorting tiles, which are
+// padded or diagonal and look clipped in a circle.
 $('#welcome-strip').replaceChildren(
-  ...['m74', 'ic2006', 'ngc4449', 'ugc10043', 'antennae'].map((id) => thumb(id))
+  ...['m74', 'ngc1132', 'ngc1300', 'antennae', 'ngc1427a'].map((id) => {
+    const img = el('img');
+    img.src = `images/welcome/${id}.jpg`;
+    img.alt = '';
+    return img;
+  })
 );
 function renderWelcome() {}
 $('#btn-start').addEventListener('click', () => go('sort'));

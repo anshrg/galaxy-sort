@@ -6,5 +6,5 @@ export const CONFIG = {
   unlockCode: 'BUBBLE',
   // Bump the suffix to wipe every device's saved progress on next load.
   storageKey: 'galaxy-sort-v1',
-  version: 'v0.3',
+  version: 'v0.5',
 };

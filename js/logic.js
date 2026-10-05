@@ -82,9 +82,23 @@ export function sortStatus(free) {
 export const nameOk = (g) => g.name.trim().length >= 1;
 export const whyOk = (g) => g.why.trim().length >= 3;
 
+// Names count as the same ignoring case and extra spaces: "Blobs" = " blobs " = "BLOBS".
+export const nameKey = (name) => name.trim().toLowerCase().replace(/\s+/g, ' ');
+
+/** Ids of groups whose (non-empty) name matches another group's name. */
+export function duplicateNames(groups) {
+  const seen = new Map();
+  for (const g of groups) {
+    const k = nameKey(g.name);
+    if (k) seen.set(k, [...(seen.get(k) ?? []), g.id]);
+  }
+  return new Set([...seen.values()].filter((ids) => ids.length > 1).flat());
+}
+
 export function whyStatus(groups) {
   const missing = groups.filter((g) => !nameOk(g) || !whyOk(g)).length;
-  return { missing, ok: missing === 0 };
+  const dupes = duplicateNames(groups);
+  return { missing, dupes, ok: missing === 0 && dupes.size === 0 };
 }
 
 /** Compare guided bins with the answer key. typeOf(id) → correct type. */

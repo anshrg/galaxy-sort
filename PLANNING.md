@@ -52,6 +52,8 @@ All from esahubble.org (ESA/Hubble CC BY 4.0; NASA/STScI Hubble Heritage public 
 | 2026-10-05 | Unlock code BUBBLE; no teacher/projector view (user makes own slides) | User |
 | 2026-10-05 | Client-side word filter on group names + why text (mask with ***) | User |
 | 2026-10-05 | Galaxy set approved for now; science wording to be checked by user later | User |
+| 2026-10-05 | v0.4 aesthetic pass: near-black desaturated background, tiled stars.svg, near-opaque panels, numbered stepper | User asked |
+| 2026-10-05 | v0.5: group names must be unique (case/space-insensitive) at the why gate; welcome strip uses dedicated tight crops (`images/welcome/`: M74, NGC 1132, NGC 1300, Antennae, NGC 1427A) | User |
 | 2026-10-05 | Shared Chromebooks but separate accounts → no extra reset UX needed | User |
 
 ## 6. Next Steps
@@ -88,3 +90,4 @@ All from esahubble.org (ESA/Hubble CC BY 4.0; NASA/STScI Hubble Heritage public 
   galaxy selected, tapping a galaxy in another group, or the group's name box, places it there
   (students tap groups wherever). Puppeteer-core lives in the session scratchpad (`e2e/run.mjs`),
   driven against the cached Chrome for Testing; `page.touchscreen` produces real touch pointer events.
+- **2026-10-05 (aesthetics v0.4):** Translucent cards over the starfield let stars run behind text — panels are now ~92% opaque. Overlapping circular thumbnails turn to mush because many galaxies sit on black; keep them spaced with a hairline ring.

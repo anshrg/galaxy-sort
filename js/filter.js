@@ -1,7 +1,7 @@
 // Light word filter for student-typed text (group names, reasons). Masks a matching word
 // with ***. Deliberately simple: it catches casual cases, not determined misspellers.
 // Word lists live in filter-words.js.
-import { EXACT, CONTAINS } from './filter-words.js?v=3';
+import { EXACT, CONTAINS } from './filter-words.js?v=4';
 
 const LEET = { '@': 'a', 4: 'a', 3: 'e', 1: 'i', '!': 'i', 0: 'o', $: 's', 5: 's', 7: 't' };
 
